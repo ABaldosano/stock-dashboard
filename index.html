@@ -30,7 +30,6 @@
       <div class="market-status-pill open" id="marketStatusIndicator">
         <span class="dot"></span> <span id="liveTimestampLabel">EST TERMINAL LIVE</span>
       </div>
-      <button onclick="toggleTheme()" class="btn-icon" title="Toggle Theme">☽</button>
     </div>
   </header>
 
@@ -192,6 +191,10 @@
 
   <footer class="app-footer-bar">
     <p>&copy; <span id="currentFooterYear">2026</span> StockDash Financial Terminal Network. All Rights Reserved.</p>
+    <div class="footer-status-right">
+      <span id="marketTimeLabel">LOADING TERMINAL STATUS...</span>
+      <button onclick="toggleTheme()" class="btn-icon" title="Toggle Theme">☽</button>
+    </div>
   </footer>
 
   <script src="frontend/script.js"></script>
