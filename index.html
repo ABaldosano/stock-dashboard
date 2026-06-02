@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuantumTrade | Professional Financial Intelligence Terminal</title>
+  <title>StockDash | Professional Financial Intelligence Terminal</title>
   <link rel="stylesheet" href="frontend/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -15,14 +15,11 @@
 
   <header class="app-header">
     <div class="brand">
-      <span class="logo-icon">⚡</span>
-      <h1>QUANTUM<span class="accent">TRADE</span></h1>
-      <span class="badge">PRO</span>
+      <h1>STOCK<span class="accent">DASH</span></h1>
     </div>
     
     <div class="search-wrapper">
       <div class="search-input-field">
-        <span class="search-glass-icon">🔍</span>
         <input type="text" id="tickerInput" placeholder="Search Company Name or Ticker Symbol..." autocomplete="off" oninput="handleSearchInput(this.value)" />
       </div>
       <div id="autocompleteDropdown" class="autocomplete-suggestions"></div>
@@ -33,7 +30,7 @@
       <div class="market-status-pill open" id="marketStatusIndicator">
         <span class="dot"></span> <span id="liveTimestampLabel">EST TERMINAL LIVE</span>
       </div>
-      <button onclick="toggleTheme()" class="btn-icon" title="Toggle Theme">🌓</button>
+      <button onclick="toggleTheme()" class="btn-icon" title="Toggle Theme">☽</button>
     </div>
   </header>
 
@@ -194,7 +191,7 @@
   </div>
 
   <footer class="app-footer-bar">
-    <p>&copy; <span id="currentFooterYear">2026</span> QuantumTrade Financial Terminal Network. All Rights Reserved.</p>
+    <p>&copy; <span id="currentFooterYear">2026</span> StockDash Financial Terminal Network. All Rights Reserved.</p>
   </footer>
 
   <script src="frontend/script.js"></script>
