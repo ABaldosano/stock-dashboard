@@ -1,9 +1,6 @@
-// PYTHONANYWHERE LIVE CLOUD ARCHITECTURE CONFIGURATION
-const PYTHONANYWHERE_USERNAME = "ArthurBaldosanoJr"; 
-
-const BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
-  ? "http://localhost:5000"
-  : `https://${PYTHONANYWHERE_USERNAME}.pythonanywhere.com`;
+const BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
+  ? "http://localhost:5000" 
+  : "https://your-backend-service.onrender.com";
 
 let activeChartInstance = null;
 let currentSymbol = "AAPL";
@@ -187,11 +184,19 @@ async function fetchAnalyticalPayload(symbol) {
     document.getElementById("stripVolume").textContent = formatLargeNumbers(infoData.volume || 38000000);
     document.getElementById("strip52Week").textContent = `$${(priceVal * 0.82).toFixed(2)} - $${(priceVal * 1.18).toFixed(2)}`;
 
-    // 3. AUTOMATE INSIGHT PROFILE DESCRIPTIONS
+    // 3. AUTOMATE INSIGHT PROFILE DESCRIPTIONS (SYNCHRONIZED WITH BACKEND)
+    console.log("=== API TRACKING LOG ===");
+    console.log("Is infoRes failing?", historyRes.error || historyRes.status === 500 || historyRes.status === 404);
+    console.log("Current extracted infoData payload:", infoData);
+
     document.getElementById("profileBio").textContent = infoData.description || `Structural enterprise profile matrix for ${infoData.name || currentMatchedMeta.name}. Operating assets map directly into global modern sector channels across ${currentMatchedMeta.sector.toLowerCase()} industries.`;
-    document.getElementById("metaHQ").textContent = infoData.hq || "California, USA";
-    document.getElementById("metaCEO").textContent = infoData.ceo || "Executive Core Council Team";
-    document.getElementById("metaEmployees").textContent = infoData.employees ? infoData.employees.toLocaleString() : "124,500";
+
+    // FIXED fallback parameters to check for nested formats
+    document.getElementById("metaHQ").textContent = infoData.hq || infoData.headquarters || "Data Unavailable";
+    document.getElementById("metaCEO").textContent = infoData.ceo || infoData.executive || "N/A";
+    document.getElementById("metaEmployees").textContent = infoData.employees 
+    ? infoData.employees.toLocaleString() 
+    : "0";
 
     // 4. AUTOMATE ANALYST FORECAST CALCULATIONS
     const targetHighVal = priceVal * 1.21;
