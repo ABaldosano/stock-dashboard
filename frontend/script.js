@@ -1,6 +1,9 @@
-const BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" 
-  ? "http://localhost:5000" 
-  : "https://your-backend-service.onrender.com";
+// PYTHONANYWHERE LIVE CLOUD ARCHITECTURE CONFIGURATION
+const PYTHONANYWHERE_USERNAME = "ArthurBaldosanoJr"; 
+
+const BASE_URL = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+  ? "http://localhost:5000"
+  : `https://${PYTHONANYWHERE_USERNAME}.pythonanywhere.com`;
 
 let activeChartInstance = null;
 let currentSymbol = "AAPL";
