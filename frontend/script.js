@@ -40,8 +40,16 @@ document.addEventListener("DOMContentLoaded", () => {
 // AUTOMATE TIME AND STATIC STUFF ON PAGE LOAD
 function initializeLiveMetadata() {
   const now = new Date();
-  document.getElementById("liveTimestampLabel").textContent = `MARKET OPEN (EST) | ${now.toLocaleDateString()} ${now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`;
   document.getElementById("currentFooterYear").textContent = now.getFullYear();
+  
+  // Real-time clock refresh engine
+  setInterval(() => {
+    const liveTime = new Date();
+    const timestampEl = document.getElementById("liveTimestampLabel");
+    if(timestampEl) {
+      timestampEl.textContent = `MARKET OPEN (EST) | ${liveTime.toLocaleDateString()} ${liveTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})}`;
+    }
+  }, 1000);
   
   // Automate Top Moving Ticker Banner from our live data matrix
   const tapeTrack = document.getElementById("tickerTape");
@@ -437,13 +445,26 @@ function formatLargeNumbers(val) {
 
 function toggleTheme() {
   document.body.classList.toggle("light-mode");
-  fetchAnalyticalPayload(currentSymbol);
+  
+  // Update the line color instantly if it's a Line Chart without refreshing data matrix
+  if (activeChartInstance && currentChartType === "line") {
+    const accentColor = getComputedStyle(document.body).getPropertyValue('--accent-color').trim() || "#4ade80";
+    activeChartInstance.data.datasets[0].borderColor = accentColor;
+    activeChartInstance.update();
+  }
 }
 
 function generateSyntheticMarketMatrix(symbol, horizon) {
   const dates = [];
   const prices = [];
   let steps = 30;
+  
+  // A simple deterministic pseudo-random seed generator
+  let seed = symbol.charCodeAt(0) + (symbol.charCodeAt(1) || 0) + horizon.charCodeAt(0);
+  function seededRandom() {
+    let x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+  }
   
   if (horizon === "1D") steps = 24;
   else if (horizon === "1W") steps = 35;
@@ -464,7 +485,7 @@ function generateSyntheticMarketMatrix(symbol, horizon) {
       timeOffset.setDate(timeOffset.getDate() - 1);
       dates.unshift(timeOffset.toISOString().split('T')[0]);
     }
-    currentSeedBasePrice += (Math.random() - 0.49) * (currentSeedBasePrice * 0.015);
+    currentSeedBasePrice += (seededRandom() - 0.49) * (currentSeedBasePrice * 0.015);
     prices.push(parseFloat(currentSeedBasePrice.toFixed(2)));
   }
 
@@ -473,18 +494,18 @@ function generateSyntheticMarketMatrix(symbol, horizon) {
 
   return {
     history: {
-      dates: dates,   // FIXED: Connects your real generated date timeline
-      prices: prices  // FIXED: Connects your real dynamic random-walk price path
+      dates: dates,   
+      prices: prices  
     },
     price: {
-      price: latestPrice // FIXED: Syncs ticker top-line value with final historical calculation point
+      price: latestPrice 
     },
     info: {
       name: meta.name,
       exchange: "NASDAQ",
       sector: meta.sector,
       marketCap: latestPrice * 15000000,
-      peRatio: (18 + Math.random() * 12).toFixed(1), // Adds subtle, dynamic variation to local mock valuation metrics
+      peRatio: (18 + seededRandom() * 12).toFixed(1),
       volume: 42000000,
       hq: "California, USA",
       ceo: "Executive Core Council Team",
