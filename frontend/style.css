@@ -107,13 +107,23 @@ body {
 .brand {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px; /* Provides precise, readable horizontal spacing between image and text */
 }
 
 .brand h1 {
   font-size: 18px;
   letter-spacing: 1px;
   font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* KEEPS LOGO CRISP AND SNAPPED PERFECTIONALLY ALONGSIDE THE TEXT */
+.logo-img {
+  height: 24px;   /* Constrains vertical boundary height to match header rows */
+  width: auto;    /* Preserves original aspect ratio automatically */
+  object-fit: contain;
+  display: block;
 }
 
 .brand .accent { color: var(--accent-color); }
