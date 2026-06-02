@@ -251,17 +251,33 @@ body {
 
 .btn-primary:hover { opacity: 0.9; }
 
-.btn-icon {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  font-size: 16px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  cursor: pointer;
+/* CONTAINER HOLDING THE TIMESTAMPS AND TOGGLE BUTTON */
+.header-actions {
+  display: flex;
+  align-items: center; /* Vertically centers the pill and button on the same line */
+  gap: 12px;           /* Pushes the toggle button to the right of the live time with crisp spacing */
 }
 
-.btn-icon:hover { background: var(--bg-surface-hover); }
+/* THE BUTTON LOOKS LIKE AN INTEGRATED TERMINAL UTILITY */
+.btn-icon {
+  background: var(--bg-main);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  font-size: 14px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 28px; /* Matches the exact height of your market status pill tag */
+  transition: background-color 0.15s, border-color 0.15s;
+}
+
+.btn-icon:hover { 
+  background: var(--bg-surface-hover); 
+  border-color: var(--text-muted);
+}
 
 /* ALIGN THEME TOGGLE SIDE-BY-SIDE WITH TIME IN HEADER */
 .header-actions {

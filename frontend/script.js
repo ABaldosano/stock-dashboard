@@ -42,11 +42,11 @@ function initializeLiveMetadata() {
   const now = new Date();
   document.getElementById("currentFooterYear").textContent = now.getFullYear();
   
-  // Real-time clock refresh engine
+  // Real-time loop to continuously stream ticking values cleanly into the label
   setInterval(() => {
     const liveTime = new Date();
     const timestampEl = document.getElementById("liveTimestampLabel");
-    if(timestampEl) {
+    if (timestampEl) {
       timestampEl.textContent = `MARKET OPEN (EST) | ${liveTime.toLocaleDateString()} ${liveTime.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'})}`;
     }
   }, 1000);
