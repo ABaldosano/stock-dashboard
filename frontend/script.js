@@ -363,7 +363,12 @@ function changeChartType(type) {
 }
 
 function toggleIndicator(indicator) {
-  if (indicator === 'RSI') overlayRsiActive = !overlayRsiActive;
+  if (indicator === 'RSI') {
+    overlayRsiActive = !overlayRsiActive;
+    // Highlight the target element visually to confirm activation
+    const rsiBtn = document.querySelector(".btn-indicator");
+    if (rsiBtn) rsiBtn.classList.toggle("active", overlayRsiActive);
+  }
   fetchAnalyticalPayload(currentSymbol);
 }
 

@@ -3,33 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QuantumTrade | Professional Financial Intelligence Dashboard</title>
+  <title>QuantumTrade | Professional Financial Intelligence Terminal</title>
   <link rel="stylesheet" href="frontend/style.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="dark-mode">
 
   <div class="ticker-tape">
-    <div class="tape-track" id="tickerTape">
-      </div>
+    <div class="tape-track" id="tickerTape"></div>
   </div>
 
   <header class="app-header">
     <div class="brand">
-      <span class="logo-icon">📈</span>
+      <span class="logo-icon">⚡</span>
       <h1>QUANTUM<span class="accent">TRADE</span></h1>
       <span class="badge">PRO</span>
     </div>
     
-    <div class="search-wrapper" style="position: relative;">
-      <input type="text" id="tickerInput" placeholder="Enter Company Name or Ticker Symbol..." autocomplete="off" oninput="handleSearchInput(this.value)" />
+    <div class="search-wrapper">
+      <div class="search-input-field">
+        <span class="search-glass-icon">🔍</span>
+        <input type="text" id="tickerInput" placeholder="Search Company Name or Ticker Symbol..." autocomplete="off" oninput="handleSearchInput(this.value)" />
+      </div>
       <div id="autocompleteDropdown" class="autocomplete-suggestions"></div>
       <button onclick="loadStock()" class="btn-primary">Analyze</button>
     </div>
     
     <div class="header-actions">
       <div class="market-status-pill open" id="marketStatusIndicator">
-        <span class="dot"></span> <span id="liveTimestampLabel">LOADING TERMINAL TIME...</span>
+        <span class="dot"></span> <span id="liveTimestampLabel">EST TERMINAL LIVE</span>
       </div>
       <button onclick="toggleTheme()" class="btn-icon" title="Toggle Theme">🌓</button>
     </div>
@@ -37,27 +39,11 @@
 
   <div class="dashboard-grid">
     
-    <aside class="sidebar-panel">
-      <div class="panel-header">
-        <h3>Custom Watchlist</h3>
-        <button onclick="addToWatchlist()" class="btn-text">+ Add Current</button>
-      </div>
-      <div class="watchlist-container" id="watchlistItems">
-        <div class="empty-state">No stocks added yet.</div>
-      </div>
-
-      <div class="panel-header margin-top">
-        <h3>Trending Signals</h3>
-      </div>
-      <div class="trending-container" id="trendingItemsContainer">
-        </div>
-    </aside>
-
     <main class="main-content-panel">
       
       <section class="stock-hero-card" id="stockHeroSection" style="display: none;">
-        <div class="hero-header">
-          <div>
+        <div class="hero-layout-split">
+          <div class="hero-core-profile">
             <div class="meta-row">
               <span class="exchange-tag" id="heroExchange">-</span>
               <span class="sector-tag" id="heroSector">-</span>
@@ -81,29 +67,35 @@
 
       <section class="card workstation-panel">
         <div class="workstation-header">
-          <div class="chart-controls">
-            <button class="btn-toggle" data-interval="1D" onclick="changeInterval('1D')">1D</button>
-            <button class="btn-toggle" data-interval="1W" onclick="changeInterval('1W')">1W</button>
-            <button class="btn-toggle" data-interval="1M" onclick="changeInterval('1M')">1M</button>
-            <button class="btn-toggle active" data-interval="6M" onclick="changeInterval('6M')">6M</button>
-            <button class="btn-toggle" data-interval="1Y" onclick="changeInterval('1Y')">1Y</button>
-            <button class="btn-toggle" data-interval="5Y" onclick="changeInterval('5Y')">5Y</button>
+          <div class="control-row">
+            <span class="control-group-label">Interval:</span>
+            <div class="chart-controls">
+              <button class="btn-toggle" data-interval="1D" onclick="changeInterval('1D')">1D</button>
+              <button class="btn-toggle" data-interval="1W" onclick="changeInterval('1W')">1W</button>
+              <button class="btn-toggle" data-interval="1M" onclick="changeInterval('1M')">1M</button>
+              <button class="btn-toggle active" data-interval="6M" onclick="changeInterval('6M')">6M</button>
+              <button class="btn-toggle" data-interval="1Y" onclick="changeInterval('1Y')">1Y</button>
+              <button class="btn-toggle" data-interval="5Y" onclick="changeInterval('5Y')">5Y</button>
+            </div>
           </div>
-          <div class="chart-controls">
-            <button class="btn-toggle active" id="typeLine" onclick="changeChartType('line')">Line Chart</button>
-            <button class="btn-toggle" id="typeCandle" onclick="changeChartType('bar')">Candlestick</button>
-            <button class="btn-toggle text-accent" onclick="toggleIndicator('RSI')">Overlay RSI</button>
+          <div class="control-row">
+            <span class="control-group-label">Display:</span>
+            <div class="chart-controls">
+              <button class="btn-toggle active" id="typeLine" onclick="changeChartType('line')">Line</button>
+              <button class="btn-toggle" id="typeCandle" onclick="changeChartType('bar')">Candles</button>
+              <button class="btn-toggle btn-indicator" onclick="toggleIndicator('RSI')">RSI</button>
+            </div>
           </div>
         </div>
-        <div class="chart-wrapper-box">
+        <div class="chart-container-frame">
           <canvas id="mainIntelligenceChart"></canvas>
         </div>
       </section>
 
       <div class="sub-grid">
-        <div class="card">
+        <div class="card core-bio-card">
           <h3>Company Insights Profile</h3>
-          <div class="profile-bio" id="profileBio">Loading security records matrix...</div>
+          <p class="profile-bio" id="profileBio">Loading structural analytical security logs...</p>
           <table class="data-table margin-top-sm">
             <tr><td>Headquarters</td><td id="metaHQ" class="text-right">-</td></tr>
             <tr><td>CEO</td><td id="metaCEO" class="text-right">-</td></tr>
@@ -111,36 +103,60 @@
           </table>
         </div>
 
-        <div class="card grid-split-flows">
-          <div>
-            <h3>Analyst Targets & Forecasts</h3>
-            <div class="consensus-meter-box margin-top-sm">
+        <div class="card analyst-forecast-card">
+          <h3>Analyst Targets & Forecasts</h3>
+          <div class="forecast-layout">
+            <div class="consensus-meter-box">
               <div class="gauge-value" id="consensusRating">-</div>
-              <div class="gauge-label">Consensus Target Score</div>
+              <div class="gauge-label">Consensus Score</div>
             </div>
+            <table class="data-table">
+              <tr><td>Target High Price</td><td id="targetHigh" class="text-right font-weight-bold">-</td></tr>
+              <tr><td>Target Median</td><td id="targetMedian" class="text-right font-weight-bold">-</td></tr>
+              <tr><td>Implied Upside</td><td id="targetUpside" class="text-right up font-weight-bold">-</td></tr>
+            </table>
           </div>
-          <table class="data-table">
-            <tr><td>Target High Price</td><td id="targetHigh" class="text-right font-weight-bold">$0.00</td></tr>
-            <tr><td>Target Median</td><td id="targetMedian" class="text-right font-weight-bold">$0.00</td></tr>
-            <tr><td>Implied Upside</td><td id="targetUpside" class="text-right up font-weight-bold">0.00%</td></tr>
-          </table>
         </div>
       </div>
 
-      <section class="card">
-        <h3>Global Intelligence Market Screener</h3>
-        <div class="screener-filters">
-          <select id="filterSector" onchange="runScreener()">
-            <option value="">All Sectors</option>
-            <option value="Technology">Technology</option>
-            <option value="Financial">Financial Services</option>
-            <option value="Healthcare">Healthcare</option>
-          </select>
-          <select id="filterCap" onchange="runScreener()">
-            <option value="">All Market Caps</option>
-            <option value="mega">Mega Cap (>$200B)</option>
-            <option value="large">Large Cap ($10B-$200B)</option>
-          </select>
+      <section class="card Matrix-section">
+        <h3>Multi-Company Comparison Matrix</h3>
+        <div class="table-container-scroll">
+          <table class="comparison-matrix">
+            <thead>
+              <tr id="compareHeaders">
+                <th>Metric Point</th>
+                <th class="active-col" id="compLabelTarget">Target Asset</th>
+                <th id="compLabelPeer1">Peer Base 1</th>
+                <th id="compLabelPeer2">Peer Base 2</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>Market Capitalization</td><td id="compCap0" class="active-col">-</td><td id="compCap1">-</td><td id="compCap2">-</td></tr>
+              <tr><td>P/E Ratio Valuation</td><td id="compPE0" class="active-col">-</td><td id="compPE1">-</td><td id="compPE2">-</td></tr>
+              <tr><td>Current Close Price</td><td id="compPrice0" class="active-col">-</td><td id="compPrice1">-</td><td id="compPrice2">-</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card screener-section">
+        <div class="panel-header flex-column-mobile">
+          <h3>Global Intelligence Market Screener</h3>
+          <div class="screener-filters">
+            <select id="filterSector" onchange="runScreener()">
+              <option value="">All Sectors</option>
+              <option value="Technology">Technology</option>
+              <option value="Financial">Financial Services</option>
+              <option value="Healthcare">Healthcare</option>
+              <option value="Consumer Cyclical">Consumer Cyclical</option>
+            </select>
+            <select id="filterCap" onchange="runScreener()">
+              <option value="">All Market Caps</option>
+              <option value="mega">Mega Cap (>$200B)</option>
+              <option value="large">Large Cap ($10B-$200B)</option>
+            </select>
+          </div>
         </div>
         <div class="table-container-scroll">
           <table class="data-table interactive-rows">
@@ -158,32 +174,27 @@
           </table>
         </div>
       </section>
-
-      <section class="card">
-        <h3>Multi-Company Comparison Matrix</h3>
-        <div class="table-container-scroll margin-top-sm">
-          <table class="comparison-matrix">
-            <thead>
-              <tr id="compareHeaders">
-                <th>Metric Point</th>
-                <th class="active-col" id="compLabelTarget">Target Asset</th>
-                <th id="compLabelPeer1">Peer Base 1</th>
-                <th id="compLabelPeer2">Peer Base 2</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>Market Capitalization</td><td id="compCap0">-</td><td id="compCap1">-</td><td id="compCap2">-</td></tr>
-              <tr><td>P/E Ratio Valuation</td><td id="compPE0">-</td><td id="compPE1">-</td><td id="compPE2">-</td></tr>
-              <tr><td>Current Close Price</td><td id="compPrice0">-</td><td id="compPrice1">-</td><td id="compPrice2">-</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
     </main>
+
+    <aside class="sidebar-panel">
+      <div class="panel-header">
+        <h3>Custom Watchlist</h3>
+        <button onclick="addToWatchlist()" class="btn-text">+ Add Current</button>
+      </div>
+      <div class="watchlist-container" id="watchlistItems">
+        <div class="empty-state">No stocks tracking currently.</div>
+      </div>
+
+      <div class="panel-header margin-top">
+        <h3>Trending Signals</h3>
+      </div>
+      <div class="trending-container" id="trendingItemsContainer"></div>
+    </aside>
+
   </div>
 
   <footer class="app-footer-bar">
-    <p>&copy; <span id="currentFooterYear">2026</span> QuantumTrade Financial Network Systems. Internal analytical terminal engine framework.</p>
+    <p>&copy; <span id="currentFooterYear">2026</span> QuantumTrade Financial Terminal Network. All Rights Reserved.</p>
   </footer>
 
   <script src="frontend/script.js"></script>
