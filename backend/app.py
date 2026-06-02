@@ -60,11 +60,29 @@ def get_info(ticker):
     try:
         stock = yf.Ticker(ticker)
         info = stock.info
+
+        # Build clean Headquarters location data string dynamically
+        city = info.get("city", "")
+        state = info.get("state", "")
+        country = info.get("country", "")
+        hq_locations = [loc for loc in [city, state, country] if loc]
+        hq_string = ", ".join(hq_locations) if hq_locations else "N/A"
+
+        # Safe extraction for the principal Executive Officer name
+        ceo_name = "N/A"
+        officers = info.get("companyOfficers", [])
+        if officers and isinstance(officers, list) and len(officers) > 0:
+            ceo_name = officers[0].get("name", "N/A")
+
         data = {
             "name": info.get("longName", ticker),
             "sector": info.get("sector", "N/A"),
             "marketCap": info.get("marketCap", "N/A"),
             "peRatio": info.get("trailingPE", "N/A"),
+            # INJECT LIVE ATTRIBUTES FROM THE REAL TIME YAHOO FINANCE DATASTREAM
+            "hq": hq_string,
+            "ceo": ceo_name,
+            "employees": info.get("fullTimeEmployees", "N/A")
         }
         return jsonify(data)
     except Exception as e:

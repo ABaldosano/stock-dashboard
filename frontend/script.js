@@ -195,12 +195,15 @@ async function fetchAnalyticalPayload(symbol) {
     // 3. AUTOMATE INSIGHT PROFILE DESCRIPTIONS (SYNCHRONIZED WITH BACKEND)
     document.getElementById("profileBio").textContent = infoData.description || `Structural enterprise profile matrix for ${infoData.name || currentMatchedMeta.name}. Operating assets map directly into global modern sector channels across ${currentMatchedMeta.sector.toLowerCase()} industries.`;
 
-    // SMART KEY FALLBACK EXTRACTION
-    document.getElementById("metaHQ").textContent = infoData.hq || infoData.headquarters || "California, USA";
-    document.getElementById("metaCEO").textContent = infoData.ceo || infoData.executive || "Executive Core Council Team";
-    document.getElementById("metaEmployees").textContent = infoData.employees 
-      ? infoData.employees.toLocaleString() 
-      : "124,500";
+    // DIRECT STREAM EXTRACTS FOR RAW REALTIME NETWORK RESPONSES
+    document.getElementById("metaHQ").textContent = infoData.hq || "N/A";
+    document.getElementById("metaCEO").textContent = infoData.ceo || "N/A";
+    
+    if (infoData.employees && infoData.employees !== "N/A") {
+      document.getElementById("metaEmployees").textContent = Number(infoData.employees).toLocaleString();
+    } else {
+      document.getElementById("metaEmployees").textContent = "N/A";
+    }
 
     // 4. AUTOMATE ANALYST FORECAST CALCULATIONS
     const targetHighVal = priceVal * 1.21;
