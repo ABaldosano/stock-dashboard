@@ -360,7 +360,24 @@ function executeVisualGraphCore(labels, prices, symbol) {
         }
       },
       plugins: {
-        legend: { labels: { color: "#fff" }, filter: (item) => item.text !== "Wicks" }
+        legend: { labels: { color: "#fff" }, filter: (item) => item.text !== "Wicks" },
+        zoom: {
+          zoom: {
+            wheel: {
+              enabled: true,         // Allows wheel scroll zooming
+              speed: 0.1
+            },
+            pinch: {
+              enabled: true          // Allows trackpad/mobile pinching
+            },
+            mode: 'xy',              // Restructures scaling on BOTH X and Y axes simultaneously
+          },
+          pan: {
+            enabled: true,           // Enables drag-to-navigate panning
+            mode: 'xy',              // Allows dragging up, down, left, and right
+            threshold: 10            // Minimizes jitter on normal click actions
+          }
+        }
       }
     }
   });
