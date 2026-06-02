@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Stock Dashboard</h1>
+
+    <div class="search-bar">
+      <input type="text" id="tickerInput" placeholder="Enter ticker (e.g. AAPL)" />
+      <button onclick="loadStock()">Search</button>
+    </div>
+
+    <div class="stock-info" id="stockInfo" style="display:none;">
+      <h2 id="stockName"></h2>
+      <p id="stockPrice"></p>
+      <p id="stockSector"></p>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="priceChart"></canvas>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

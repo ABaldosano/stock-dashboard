@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #0f0f0f;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 20px;
+}
+
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  color: #4ade80;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.search-bar button {
+  padding: 10px 20px;
+  background: #4ade80;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.stock-info {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.stock-info h2 {
+  font-size: 1.4rem;
+  margin-bottom: 8px;
+}
+
+.stock-info p {
+  color: #aaa;
+  margin-bottom: 4px;
+}
+
+.chart-container {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 20px;
+}
